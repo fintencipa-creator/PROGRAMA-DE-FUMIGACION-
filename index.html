@@ -6,7 +6,35 @@
   <meta name="theme-color" content="#FED700">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Fumigación PF Rosa - Semana 2640</title>
+
+  <!-- Primary Meta Tags -->
+  <title>🌱 Fumigación PF Rosa - Semana 2640</title>
+  <meta name="title" content="🌱 Fumigación PF Rosa - Programa Semanal">
+  <meta name="description" content="Consulta en tiempo real el programa de fumigación por bloque, días de aplicación, productos, dosis y categoría toxicológica del cultivo PF Rosa.">
+  <meta name="author" content="Proyecto PF Rosa">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / Facebook / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="🌱 Fumigación PF Rosa • Programa de Aplicaciones">
+  <meta property="og:description" content="Semana 2640: Consulta por bloque los días de aplicación, productos, dosis y categoría toxicológica en tiempo real.">
+  <meta property="og:image" content="preview.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="PF Rosa Fumigación">
+  <meta property="og:locale" content="es_CO">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="🌱 Fumigación PF Rosa • Programa de Aplicaciones">
+  <meta name="twitter:description" content="Semana 2640: Consulta por bloque los días de aplicación, productos, dosis y categoría toxicológica en tiempo real.">
+  <meta name="twitter:image" content="preview.png">
+
+  <!-- Favicon & Mobile Touch Icons -->
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
+
   <style>
     :root {
       --bg-yellow: #FED700;
@@ -94,7 +122,7 @@
       border: 3.5px solid var(--border-dark);
       box-shadow: 4px 4px 0px rgba(0, 0, 0, 1);
       min-height: 80px;
-      padding: 18px 14px;
+      padding: 16px 14px;
       text-align: center;
       cursor: pointer;
       user-select: none;
@@ -103,6 +131,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      position: relative;
     }
 
     .block-card:hover {
@@ -121,6 +150,22 @@
       color: #000000;
       letter-spacing: 1px;
       text-transform: uppercase;
+    }
+
+    /* Badge on block card when it has a 6:00 AM application */
+    .block-card-6am-pill {
+      margin-top: 6px;
+      background: #FED700;
+      color: #000000;
+      font-size: 0.78rem;
+      font-weight: 900;
+      padding: 3px 10px;
+      border: 2px solid #000000;
+      box-shadow: 2px 2px 0px #000000;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      letter-spacing: 0.3px;
     }
 
     /* Modal / Pop-up Overlay */
@@ -222,23 +267,64 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 16px;
       background-color: #F4F6F9;
     }
 
-    /* DAY SECTION: Individual colors per day */
+    /* DAY SECTION */
     .day-section {
       border: 3px solid #000000;
       box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.9);
       padding: 14px 12px;
-      border-radius: 2px;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* Highlighted 6:00 AM Day without Reentry */
+    .day-section.dia-sin-reentrada-6am {
+      border: 4.5px solid #000000 !important;
+      box-shadow: 6px 7px 0px #000000 !important;
+      position: relative;
+    }
+
+    /* 6:00 AM Alert Banner (Exact user wording) */
+    .alerta-6am-banner {
+      background: #FFF7ED;
+      border: 3px solid #000000;
+      box-shadow: 3px 3px 0px #000000;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-left: 10px solid #EA580C;
+      animation: alertPulse 2s infinite ease-in-out;
+    }
+
+    @keyframes alertPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.01); }
+    }
+
+    .alerta-6am-icon {
+      font-size: 1.8rem;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
+    .alerta-6am-text {
+      font-size: 0.96rem;
+      font-weight: 900;
+      color: #000000;
+      line-height: 1.35;
+      letter-spacing: 0.2px;
     }
 
     .day-title {
       font-size: 1.15rem;
       font-weight: 900;
       color: #000000;
-      margin-bottom: 12px;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -259,10 +345,28 @@
       letter-spacing: 0.3px;
     }
 
+    /* Badge 6:00 AM on Day Header */
+    .day-badge-6am {
+      background: #FF4757 !important;
+      color: #FFFFFF !important;
+      font-size: 0.8rem;
+      font-weight: 900;
+      padding: 3px 9px;
+      border: 2px solid #000000;
+      box-shadow: 2px 2px 0px #000000;
+      text-transform: uppercase;
+      animation: flashBadge 1.5s infinite alternate;
+    }
+
+    @keyframes flashBadge {
+      0% { opacity: 0.9; }
+      100% { opacity: 1; transform: scale(1.03); }
+    }
+
     /* Day Theme Backgrounds */
     .day-section.day-lunes {
       background-color: #DDF1FF;
-      border-top: 7px solid #0284C7;
+      border-top: 8px solid #0284C7;
     }
     .day-section.day-lunes .day-badge {
       background-color: #0284C7;
@@ -271,7 +375,7 @@
 
     .day-section.day-martes {
       background-color: #FFEADB;
-      border-top: 7px solid #EA580C;
+      border-top: 8px solid #EA580C;
     }
     .day-section.day-martes .day-badge {
       background-color: #EA580C;
@@ -280,7 +384,7 @@
 
     .day-section.day-miercoles {
       background-color: #DCFCE7;
-      border-top: 7px solid #16A34A;
+      border-top: 8px solid #16A34A;
     }
     .day-section.day-miercoles .day-badge {
       background-color: #16A34A;
@@ -289,7 +393,7 @@
 
     .day-section.day-jueves {
       background-color: #F3E8FF;
-      border-top: 7px solid #9333EA;
+      border-top: 8px solid #9333EA;
     }
     .day-section.day-jueves .day-badge {
       background-color: #9333EA;
@@ -298,7 +402,7 @@
 
     .day-section.day-viernes {
       background-color: #FFE4E6;
-      border-top: 7px solid #E11D48;
+      border-top: 8px solid #E11D48;
     }
     .day-section.day-viernes .day-badge {
       background-color: #E11D48;
@@ -307,7 +411,7 @@
 
     .day-section.day-sabado {
       background-color: #FEF9C3;
-      border-top: 7px solid #CA8A04;
+      border-top: 8px solid #CA8A04;
     }
     .day-section.day-sabado .day-badge {
       background-color: #FED700;
@@ -316,7 +420,7 @@
 
     .day-section.day-domingo {
       background-color: #E2E8F0;
-      border-top: 7px solid #475569;
+      border-top: 8px solid #475569;
     }
     .day-section.day-domingo .day-badge {
       background-color: #475569;
@@ -325,29 +429,36 @@
 
     .day-section.day-default {
       background-color: #FFFFFF;
-      border-top: 7px solid #000000;
+      border-top: 8px solid #000000;
     }
 
     .products-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 9px;
+      gap: 10px;
     }
 
     .product-item {
       background: #FFFFFF;
       border: 2px solid #000000;
       box-shadow: 2.5px 2.5px 0px rgba(0, 0, 0, 0.85);
-      padding: 10px 12px;
+      padding: 11px 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 10px;
     }
 
+    /* Product Highlighted if no reentry */
+    .product-item.item-sin-reentrada {
+      border: 2.5px solid #000000;
+      background: #FFFFFF;
+      border-left: 8px solid #FF9F1C;
+    }
+
     .product-name {
-      font-size: 1.02rem;
+      font-size: 1.05rem;
       font-weight: 900;
       color: #000000;
       letter-spacing: 0.2px;
@@ -365,14 +476,36 @@
     }
 
     .product-dosis {
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       font-weight: 900;
-      background: #FFFFFF;
+      background: #F1F5F9;
       color: #000000;
       padding: 3px 8px;
       border: 2px solid #000000;
       white-space: nowrap;
       box-shadow: 1.5px 1.5px 0px #000000;
+    }
+
+    /* Reentrada Badge */
+    .badge-reentrada-tag {
+      font-size: 0.78rem;
+      font-weight: 900;
+      padding: 3px 7px;
+      border: 2px solid #000000;
+      white-space: nowrap;
+      box-shadow: 1.5px 1.5px 0px #000000;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .badge-reentrada-libre {
+      background-color: #FED700;
+      color: #000000;
+    }
+
+    .badge-reentrada-horas {
+      background-color: #E2E8F0;
+      color: #000000;
     }
 
     /* TOX CATEGORY BADGES */
@@ -468,9 +601,7 @@
       box-shadow: none;
     }
 
-    /* ========================================================
-       MOBILE-FIRST OPTIMIZATIONS (< 640px)
-       ======================================================== */
+    /* MOBILE-FIRST OPTIMIZATIONS (< 640px) */
     @media (max-width: 640px) {
       body {
         padding: 10px 8px 30px 8px;
@@ -496,7 +627,7 @@
 
       .block-card {
         min-height: 72px;
-        padding: 16px 12px;
+        padding: 14px 12px;
         border-width: 3.5px;
         box-shadow: 3.5px 3.5px 0px #000;
       }
@@ -505,7 +636,6 @@
         font-size: 1.45rem;
       }
 
-      /* Modal acts as a smooth bottom-sheet / full viewport on phone */
       .modal-overlay {
         padding: 0;
         align-items: flex-end;
@@ -546,16 +676,23 @@
 
       .modal-body {
         padding: 12px 10px;
-        gap: 12px;
+        gap: 14px;
       }
 
       .day-section {
         padding: 12px 10px;
       }
 
+      .alerta-6am-banner {
+        padding: 10px 12px;
+      }
+
+      .alerta-6am-text {
+        font-size: 0.88rem;
+      }
+
       .day-title {
         font-size: 1.05rem;
-        margin-bottom: 10px;
       }
 
       .product-item {
@@ -572,12 +709,12 @@
       .product-badges {
         width: 100%;
         justify-content: flex-start;
-        gap: 6px;
+        gap: 5px;
       }
 
-      .product-tox, .product-dosis {
-        font-size: 0.8rem;
-        padding: 3px 7px;
+      .product-tox, .product-dosis, .badge-reentrada-tag {
+        font-size: 0.78rem;
+        padding: 2.5px 6px;
       }
 
       .modal-footer {
@@ -626,7 +763,7 @@
   </div>
 
   <script>
-    const INITIAL_PAYLOAD = {"bloques": ["BLOQUE 1A", "BLOQUE 1B", "BLOQUE 2A", "BLOQUE 2B", "BLOQUE 3A", "BLOQUE 3B", "BLOQUE 4A", "BLOQUE 4B", "BLOQUE 5A", "BLOQUE 5B", "BLOQUE 6A", "BLOQUE 6B", "BLOQUE 7", "BLOQUE 8", "BLOQUE 11", "BLOQUE 12 CO", "BLOQUE 12 FD", "BLOQUE 13A", "BLOQUE 13B", "BLOQUE 14", "BLOQUE 15A", "BLOQUE 15AA", "BLOQUE 15B", "BLOQUE 16", "BLOQUE 17", "BLOQUE 18", "BLOQUE 19A", "BLOQUE 19B", "BLOQUE 20", "BLOQUE 21", "BLOQUE 22A", "BLOQUE 22B", "BLOQUE 23A", "BLOQUE 23B", "BLOQUE 24A", "BLOQUE 24B", "BLOQUE 25A", "BLOQUE 25B", "BLOQUE 26A", "BLOQUE 26B"], "semanaActual": "2640", "scheduleData": {"2640": {"BLOQUE 11": {"Martes": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Jueves": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Lunes": [{"producto": "AGRICLEAN", "dosis": 1, "tox": "N.A.", "tipo": "BIORACIONAL", "blanco": "ÁCAROS"}]}, "BLOQUE 1B": {"Jueves": [{"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Sábado": [{"producto": "TRANSFORM TM", "dosis": 0.5, "tox": "III", "tipo": "INSECTICIDA", "blanco": "MOSCA BLANCA"}, {"producto": "CAPSIALIL EC", "dosis": 0.3, "tox": "III", "tipo": "INSECTICIDAS", "blanco": "Thrips, ácaros"}, {"producto": "MF REDUX", "dosis": 0.5, "tox": "IV", "tipo": "COADYUVANTE", "blanco": "NA"}], "Martes": [{"producto": "SPORTAK 45 EC", "dosis": 0.6, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS CINEREA PERS."}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "SPARTA", "dosis": 0.2, "tox": "III", "tipo": "INSECTICIDA", "blanco": "TRIPS"}]}, "BLOQUE 2A": {"Miércoles": [{"producto": "BINGO SG", "dosis": 0.5, "tox": "III", "tipo": "INSECTICIDA", "blanco": "FRANKLINIELLA OCCIDENTALIS"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS COLOR"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Viernes": [{"producto": "IMPERIUS", "dosis": 0.8, "tox": "IV", "tipo": "ACARICIDA", "blanco": "ACAROS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "VIDENTI", "dosis": 0.65, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 2B": {"Jueves": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Martes": [{"producto": "VIDENTI", "dosis": 0.65, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Sábado": [{"producto": "SPARTA", "dosis": 0.2, "tox": "III", "tipo": "INSECTICIDA", "blanco": "TRIPS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 3A": {"Miércoles": [{"producto": "IMPERIUS", "dosis": 0.8, "tox": "IV", "tipo": "ACARICIDA", "blanco": "ACAROS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Viernes": [{"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "TRIPS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "tipo": "BIORACIONAL", "blanco": "MILDEO POLVOSO"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "SANYSTAR 30 SC", "dosis": 0.75, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS, MILDEO POLVOS"}]}, "BLOQUE 3B": {"Viernes": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Martes": [{"producto": "SCALA 40 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "PADAN AG 50 SP", "dosis": 1.6, "tox": "III", "tipo": "INSECTICIDA", "blanco": "TRIPS"}], "Sábado": [{"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 4A": {"Viernes": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "AZIMUT 320 SC", "dosis": 1, "tox": "II", "tipo": "FUNGICIDA", "blanco": "MOHO GRIS (BOTRYTIS CINÉREA)  MILDEO POLVOSO (PODOSPHAERA PANNOSA) CLADOSPORIUM ECHINULSTIUM"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Miércoles": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "TRANSFORM TM", "dosis": 0.5, "tox": "III", "tipo": "INSECTICIDA", "blanco": "TRIPS"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 4B": {"Sábado": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Martes": [{"producto": "VIDENTI", "dosis": 0.65, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Jueves": [{"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "SULFATO DE MG", "dosis": 2, "tox": "N.A.", "tipo": "FERTILIZANTES", "blanco": "NA"}]}, "BLOQUE 5A": {"Viernes": [{"producto": "STARMITE 30 SC", "dosis": 0.35, "tox": "II", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS CINNABARINUS, TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "AZIMUT 320 SC", "dosis": 1, "tox": "II", "tipo": "FUNGICIDA", "blanco": "MOHO GRIS (BOTRYTIS CINÉREA)  MILDEO POLVOSO (PODOSPHAERA PANNOSA) CLADOSPORIUM ECHINULSTIUM"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Miércoles": [{"producto": "SULFATO DE MG", "dosis": 2, "tox": "N.A.", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}]}, "BLOQUE 5B": {"Jueves": [{"producto": "STARMITE 30 SC", "dosis": 0.35, "tox": "II", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS CINNABARINUS, TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Martes": [{"producto": "AZIMUT 320 SC", "dosis": 1, "tox": "II", "tipo": "FUNGICIDA", "blanco": "MOHO GRIS (BOTRYTIS CINÉREA)  MILDEO POLVOSO (PODOSPHAERA PANNOSA) CLADOSPORIUM ECHINULSTIUM"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Sábado": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 6A": {"Viernes": [{"producto": "STARMITE 30 SC", "dosis": 0.35, "tox": "II", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS CINNABARINUS, TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "SCALA 40 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS COLOR"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Miércoles": [{"producto": "SULFATO DE MG", "dosis": 2, "tox": "N.A.", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}]}, "BLOQUE 6B": {"Jueves": [{"producto": "IMPERIUS", "dosis": 0.8, "tox": "IV", "tipo": "ACARICIDA", "blanco": "ACAROS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Martes": [{"producto": "SCALA 40 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Sábado": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "BANGUARD 42 SC", "dosis": 1, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRITYS"}]}, "BLOQUE 7": {"Miércoles": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Lunes": [{"producto": "AZIMUT 320 SC", "dosis": 1, "tox": "II", "tipo": "FUNGICIDA", "blanco": "MOHO GRIS (BOTRYTIS CINÉREA)  MILDEO POLVOSO (PODOSPHAERA PANNOSA) CLADOSPORIUM ECHINULSTIUM"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 8": {"Sábado": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Martes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "SCALA 40 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS COLOR"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Viernes": [{"producto": "SULFATO DE MG", "dosis": 2, "tox": "N.A.", "tipo": "FERTILIZANTES", "blanco": "ACAROS"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}]}, "BLOQUE 15A": {"Miércoles": [{"producto": "IMPERIUS", "dosis": 0.8, "tox": "IV", "tipo": "ACARICIDA", "blanco": "ACAROS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "ELMUS SC", "dosis": 0.4, "tox": "II", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "SANYSTAR 30 SC", "dosis": 0.75, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS, MILDEO POLVOS"}]}, "BLOQUE 16": {"Viernes": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Miércoles": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "BANGUARD 42 SC", "dosis": 1, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRITYS"}], "Lunes": [{"producto": "NANKIN 100 ME", "dosis": 0.4, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}]}, "BLOQUE 17": {"Miércoles": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Lunes": [{"producto": "AGRICLEAN", "dosis": 1, "tox": "N.A.", "tipo": "BIORACIONAL", "blanco": "ÁCAROS"}]}, "BLOQUE 18": {"Miércoles": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "SCALA 40 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "SANYSTAR 30 SC", "dosis": 0.75, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS, MILDEO POLVOS"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "ACAROS"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "SANYSTAR 30 SC", "dosis": 0.75, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS, MILDEO POLVOS"}]}, "BLOQUE 12 CO": {"Jueves": [{"producto": "IMPERIUS", "dosis": 0.8, "tox": "IV", "tipo": "ACARICIDA", "blanco": "ACAROS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Martes": [{"producto": "AZIMUT 320 SC", "dosis": 1, "tox": "II", "tipo": "FUNGICIDA", "blanco": "MOHO GRIS (BOTRYTIS CINÉREA)  MILDEO POLVOSO (PODOSPHAERA PANNOSA) CLADOSPORIUM ECHINULSTIUM"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 13A": {"Miércoles": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "SPORTAK 45 EC", "dosis": 0.6, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS CINEREA PERS."}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 13B": {"Jueves": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Martes": [{"producto": "NANKIN 100 ME", "dosis": 0.4, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "SANYSTAR 30 SC", "dosis": 0.75, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS, MILDEO POLVOS"}], "Sábado": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "SANYSTAR 30 SC", "dosis": 0.75, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS, MILDEO POLVOS"}]}, "BLOQUE 14": {"Miércoles": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Lunes": [{"producto": "SCALA 40 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 15B": {"Martes": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "ELMUS SC", "dosis": 0.4, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS Y PUCCINIA HORIANA"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Sábado": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 19A": {"Miércoles": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Lunes": [{"producto": "NANKIN 100 ME", "dosis": 0.4, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}]}, "BLOQUE 19B": {"Jueves": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Martes": [{"producto": "NANKIN 100 ME", "dosis": 0.4, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Sábado": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 20": {"Sábado": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Jueves": [{"producto": "SULFATO DE MG", "dosis": 2, "tox": "N.A.", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}], "Martes": [{"producto": "ELMUS SC", "dosis": 0.4, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS Y PUCCINIA HORIANA"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}]}, "BLOQUE 21": {"Miércoles": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "TRIPS"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Lunes": [{"producto": "NANKIN 100 ME", "dosis": 0.4, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}]}, "BLOQUE 22A": {"Miércoles": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Lunes": [{"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "BOTRYTIS COLOR"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "KENDAL", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 22B": {"Jueves": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Martes": [{"producto": "NANKIN 100 ME", "dosis": 0.4, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Sábado": [{"producto": "SPARTA", "dosis": 0.2, "tox": "III", "tipo": "INSECTICIDA", "blanco": "TRIPS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 23A": {"Miércoles": [{"producto": "STARMITE 30 SC", "dosis": 0.35, "tox": "II", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS CINNABARINUS, TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "ELMUS SC", "dosis": 0.4, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS Y PUCCINIA HORIANA"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS COLOR"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Viernes": [{"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FOLIAR", "blanco": "GENERAL"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "MF REDUX", "dosis": 0.5, "tox": "IV", "tipo": "FOLIAR", "blanco": "GENERAL"}]}, "BLOQUE 23B": {"Jueves": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Martes": [{"producto": "VIDENTI", "dosis": 0.65, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "SANYSTAR 30 SC", "dosis": 0.75, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS, MILDEO POLVOS"}], "Sábado": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "SANYSTAR 30 SC", "dosis": 0.75, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS, MILDEO POLVOS"}]}, "BLOQUE 24A": {"Miércoles": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "ELMUS SC", "dosis": 0.4, "tox": "II", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BANGUARD 42 SC", "dosis": 1, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRITYS"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "BANGUARD 42 SC", "dosis": 1, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRITYS"}]}, "BLOQUE 24B": {"Sábado": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Martes": [{"producto": "AZIMUT 320 SC", "dosis": 1, "tox": "II", "tipo": "FUNGICIDA", "blanco": "MOHO GRIS (BOTRYTIS CINÉREA)  MILDEO POLVOSO (PODOSPHAERA PANNOSA) CLADOSPORIUM ECHINULSTIUM"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Jueves": [{"producto": "SULFATO DE MG", "dosis": 2, "tox": "N.A.", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 25A": {"Sábado": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Lunes": [{"producto": "NANKIN 100 ME", "dosis": 0.4, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Miércoles": [{"producto": "SULFATO DE MG", "dosis": 2, "tox": "N.A.", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}]}, "BLOQUE 25B": {"Sábado": [{"producto": "IMPERIUS", "dosis": 0.8, "tox": "IV", "tipo": "ACARICIDA", "blanco": "ACAROS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Martes": [{"producto": "NANKIN 100 ME", "dosis": 0.4, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Viernes": [{"producto": "SULFATO DE MG", "dosis": 2, "tox": "N.A.", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}]}, "BLOQUE 26A": {"Miércoles": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "AZIMUT 320 SC", "dosis": 1, "tox": "II", "tipo": "FUNGICIDA", "blanco": "MOHO GRIS (BOTRYTIS CINÉREA)  MILDEO POLVOSO (PODOSPHAERA PANNOSA) CLADOSPORIUM ECHINULSTIUM"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 26B": {"Jueves": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Martes": [{"producto": "NANKIN 100 ME", "dosis": 0.4, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Sábado": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 1A": {"Miércoles": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Viernes": [{"producto": "VIDENTI", "dosis": 0.65, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "PLEO 50 EC", "dosis": 0.6, "tox": "II", "tipo": "INSECTICIDA", "blanco": "TRIPS (FRANKINIELLA OCCIDENTALIS)"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Lunes": [{"producto": "INFINITO SC", "dosis": 1.6, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO VELLOSO"}, {"producto": "MF REDUX", "dosis": 0.5, "tox": "IV", "tipo": "COADYUVANTE", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS CINEREA, SIGATOKA NEGRA"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 15AA": {"Jueves": [{"producto": "IMPERIUS", "dosis": 0.8, "tox": "IV", "tipo": "ACARICIDA", "blanco": "ACAROS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Sábado": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Martes": [{"producto": "ELMUS SC", "dosis": 0.4, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS Y PUCCINIA HORIANA"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}]}, "BLOQUE 12 FD": {"Sábado": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}], "Jueves": [{"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS FREEDOM"}], "Martes": [{"producto": "ELMUS SC", "dosis": 0.4, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS Y PUCCINIA HORIANA"}, {"producto": "SANYSTAR 30 SC", "dosis": 0.75, "tox": "II", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS COLOR"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "tipo": "COADYUDANTE", "blanco": "NA"}]}}}};
+    const INITIAL_PAYLOAD = {"bloques": ["BLOQUE 1A", "BLOQUE 1B", "BLOQUE 2A", "BLOQUE 2B", "BLOQUE 3A", "BLOQUE 3B", "BLOQUE 4A", "BLOQUE 4B", "BLOQUE 5A", "BLOQUE 5B", "BLOQUE 6A", "BLOQUE 6B", "BLOQUE 7", "BLOQUE 8", "BLOQUE 11", "BLOQUE 12 CO", "BLOQUE 12 FD", "BLOQUE 13A", "BLOQUE 13B", "BLOQUE 14", "BLOQUE 15A", "BLOQUE 15AA", "BLOQUE 15B", "BLOQUE 16", "BLOQUE 17", "BLOQUE 18", "BLOQUE 19A", "BLOQUE 19B", "BLOQUE 20", "BLOQUE 21", "BLOQUE 22A", "BLOQUE 22B", "BLOQUE 23A", "BLOQUE 23B", "BLOQUE 24A", "BLOQUE 24B", "BLOQUE 25A", "BLOQUE 25B", "BLOQUE 26A", "BLOQUE 26B"], "semanaActual": "2640", "scheduleData": {"2640": {"BLOQUE 11": {"Martes": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Jueves": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Lunes": [{"producto": "AGRICLEAN", "dosis": 1, "tox": "N.A.", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "ÁCAROS"}]}, "BLOQUE 1B": {"Jueves": [{"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Sábado": [{"producto": "TRANSFORM TM", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "INSECTICIDA", "blanco": "MOSCA BLANCA"}, {"producto": "CAPSIALIL EC", "dosis": 0.3, "tox": "III", "reentrada": "AL SECADO", "tipo": "INSECTICIDAS", "blanco": "Thrips, ácaros"}, {"producto": "MF REDUX", "dosis": 0.5, "tox": "IV", "reentrada": "AL SECADO", "tipo": "COADYUVANTE", "blanco": "NA"}], "Martes": [{"producto": "SPORTAK 45 EC", "dosis": 0.6, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS CINEREA PERS."}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "SPARTA", "dosis": 0.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "INSECTICIDA", "blanco": "TRIPS"}]}, "BLOQUE 2A": {"Miércoles": [{"producto": "BINGO SG", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "INSECTICIDA", "blanco": "FRANKLINIELLA OCCIDENTALIS"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS COLOR"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Viernes": [{"producto": "IMPERIUS", "dosis": 0.8, "tox": "IV", "reentrada": "12 HORAS", "tipo": "ACARICIDA", "blanco": "ACAROS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "VIDENTI", "dosis": 0.65, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 2B": {"Jueves": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Martes": [{"producto": "VIDENTI", "dosis": 0.65, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Sábado": [{"producto": "SPARTA", "dosis": 0.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "INSECTICIDA", "blanco": "TRIPS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 3A": {"Miércoles": [{"producto": "IMPERIUS", "dosis": 0.8, "tox": "IV", "reentrada": "12 HORAS", "tipo": "ACARICIDA", "blanco": "ACAROS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Viernes": [{"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "TRIPS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "MILDEO POLVOSO"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "SANYSTAR 30 SC", "dosis": 0.75, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS, MILDEO POLVOS"}]}, "BLOQUE 3B": {"Viernes": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Martes": [{"producto": "SCALA 40 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "PADAN AG 50 SP", "dosis": 1.6, "tox": "III", "reentrada": "4 HORAS", "tipo": "INSECTICIDA", "blanco": "TRIPS"}], "Sábado": [{"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 4A": {"Viernes": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "AZIMUT 320 SC", "dosis": 1, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MOHO GRIS (BOTRYTIS CINÉREA)  MILDEO POLVOSO (PODOSPHAERA PANNOSA) CLADOSPORIUM ECHINULSTIUM"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Miércoles": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "TRANSFORM TM", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "INSECTICIDA", "blanco": "TRIPS"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 4B": {"Sábado": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Martes": [{"producto": "VIDENTI", "dosis": 0.65, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Jueves": [{"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "SULFATO DE MG", "dosis": 2, "tox": "N.A.", "reentrada": "AL SECADO", "tipo": "FERTILIZANTES", "blanco": "NA"}]}, "BLOQUE 5A": {"Viernes": [{"producto": "STARMITE 30 SC", "dosis": 0.35, "tox": "II", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS CINNABARINUS, TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "AZIMUT 320 SC", "dosis": 1, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MOHO GRIS (BOTRYTIS CINÉREA)  MILDEO POLVOSO (PODOSPHAERA PANNOSA) CLADOSPORIUM ECHINULSTIUM"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Miércoles": [{"producto": "SULFATO DE MG", "dosis": 2, "tox": "N.A.", "reentrada": "AL SECADO", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}]}, "BLOQUE 5B": {"Jueves": [{"producto": "STARMITE 30 SC", "dosis": 0.35, "tox": "II", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS CINNABARINUS, TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Martes": [{"producto": "AZIMUT 320 SC", "dosis": 1, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MOHO GRIS (BOTRYTIS CINÉREA)  MILDEO POLVOSO (PODOSPHAERA PANNOSA) CLADOSPORIUM ECHINULSTIUM"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Sábado": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 6A": {"Viernes": [{"producto": "STARMITE 30 SC", "dosis": 0.35, "tox": "II", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS CINNABARINUS, TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "SCALA 40 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS COLOR"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Miércoles": [{"producto": "SULFATO DE MG", "dosis": 2, "tox": "N.A.", "reentrada": "AL SECADO", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}]}, "BLOQUE 6B": {"Jueves": [{"producto": "IMPERIUS", "dosis": 0.8, "tox": "IV", "reentrada": "12 HORAS", "tipo": "ACARICIDA", "blanco": "ACAROS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Martes": [{"producto": "SCALA 40 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Sábado": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "BANGUARD 42 SC", "dosis": 1, "tox": "II", "reentrada": "AL SECADO", "tipo": "FUNGICIDA", "blanco": "BOTRITYS"}]}, "BLOQUE 7": {"Miércoles": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Lunes": [{"producto": "AZIMUT 320 SC", "dosis": 1, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MOHO GRIS (BOTRYTIS CINÉREA)  MILDEO POLVOSO (PODOSPHAERA PANNOSA) CLADOSPORIUM ECHINULSTIUM"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 8": {"Sábado": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Martes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "SCALA 40 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS COLOR"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Viernes": [{"producto": "SULFATO DE MG", "dosis": 2, "tox": "N.A.", "reentrada": "AL SECADO", "tipo": "FERTILIZANTES", "blanco": "ACAROS"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}]}, "BLOQUE 15A": {"Miércoles": [{"producto": "IMPERIUS", "dosis": 0.8, "tox": "IV", "reentrada": "12 HORAS", "tipo": "ACARICIDA", "blanco": "ACAROS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "ELMUS SC", "dosis": 0.4, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "SANYSTAR 30 SC", "dosis": 0.75, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS, MILDEO POLVOS"}]}, "BLOQUE 16": {"Viernes": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Miércoles": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "BANGUARD 42 SC", "dosis": 1, "tox": "II", "reentrada": "AL SECADO", "tipo": "FUNGICIDA", "blanco": "BOTRITYS"}], "Lunes": [{"producto": "NANKIN 100 ME", "dosis": 0.4, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}]}, "BLOQUE 17": {"Miércoles": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Lunes": [{"producto": "AGRICLEAN", "dosis": 1, "tox": "N.A.", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "ÁCAROS"}]}, "BLOQUE 18": {"Miércoles": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "SCALA 40 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "SANYSTAR 30 SC", "dosis": 0.75, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS, MILDEO POLVOS"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "ACAROS"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "SANYSTAR 30 SC", "dosis": 0.75, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS, MILDEO POLVOS"}]}, "BLOQUE 12 CO": {"Jueves": [{"producto": "IMPERIUS", "dosis": 0.8, "tox": "IV", "reentrada": "12 HORAS", "tipo": "ACARICIDA", "blanco": "ACAROS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Martes": [{"producto": "AZIMUT 320 SC", "dosis": 1, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MOHO GRIS (BOTRYTIS CINÉREA)  MILDEO POLVOSO (PODOSPHAERA PANNOSA) CLADOSPORIUM ECHINULSTIUM"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 13A": {"Miércoles": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "SPORTAK 45 EC", "dosis": 0.6, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS CINEREA PERS."}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 13B": {"Jueves": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Martes": [{"producto": "NANKIN 100 ME", "dosis": 0.4, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "SANYSTAR 30 SC", "dosis": 0.75, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS, MILDEO POLVOS"}], "Sábado": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "SANYSTAR 30 SC", "dosis": 0.75, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS, MILDEO POLVOS"}]}, "BLOQUE 14": {"Miércoles": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Lunes": [{"producto": "SCALA 40 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 15B": {"Martes": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "ELMUS SC", "dosis": 0.4, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS Y PUCCINIA HORIANA"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Sábado": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 19A": {"Miércoles": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Lunes": [{"producto": "NANKIN 100 ME", "dosis": 0.4, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}]}, "BLOQUE 19B": {"Jueves": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Martes": [{"producto": "NANKIN 100 ME", "dosis": 0.4, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Sábado": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 20": {"Sábado": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Jueves": [{"producto": "SULFATO DE MG", "dosis": 2, "tox": "N.A.", "reentrada": "AL SECADO", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}], "Martes": [{"producto": "ELMUS SC", "dosis": 0.4, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS Y PUCCINIA HORIANA"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}]}, "BLOQUE 21": {"Miércoles": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "TRIPS"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Lunes": [{"producto": "NANKIN 100 ME", "dosis": 0.4, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}]}, "BLOQUE 22A": {"Miércoles": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Lunes": [{"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "BOTRYTIS COLOR"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "KENDAL", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 22B": {"Jueves": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Martes": [{"producto": "NANKIN 100 ME", "dosis": 0.4, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Sábado": [{"producto": "SPARTA", "dosis": 0.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "INSECTICIDA", "blanco": "TRIPS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 23A": {"Miércoles": [{"producto": "STARMITE 30 SC", "dosis": 0.35, "tox": "II", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS CINNABARINUS, TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "ELMUS SC", "dosis": 0.4, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS Y PUCCINIA HORIANA"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS COLOR"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Viernes": [{"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FOLIAR", "blanco": "GENERAL"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "MF REDUX", "dosis": 0.5, "tox": "IV", "reentrada": "AL SECADO", "tipo": "FOLIAR", "blanco": "GENERAL"}]}, "BLOQUE 23B": {"Jueves": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Martes": [{"producto": "VIDENTI", "dosis": 0.65, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "SANYSTAR 30 SC", "dosis": 0.75, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS, MILDEO POLVOS"}], "Sábado": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "SANYSTAR 30 SC", "dosis": 0.75, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS, MILDEO POLVOS"}]}, "BLOQUE 24A": {"Miércoles": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "ELMUS SC", "dosis": 0.4, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BANGUARD 42 SC", "dosis": 1, "tox": "II", "reentrada": "AL SECADO", "tipo": "FUNGICIDA", "blanco": "BOTRITYS"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "BANGUARD 42 SC", "dosis": 1, "tox": "II", "reentrada": "AL SECADO", "tipo": "FUNGICIDA", "blanco": "BOTRITYS"}]}, "BLOQUE 24B": {"Sábado": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Martes": [{"producto": "AZIMUT 320 SC", "dosis": 1, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MOHO GRIS (BOTRYTIS CINÉREA)  MILDEO POLVOSO (PODOSPHAERA PANNOSA) CLADOSPORIUM ECHINULSTIUM"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Jueves": [{"producto": "SULFATO DE MG", "dosis": 2, "tox": "N.A.", "reentrada": "AL SECADO", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 25A": {"Sábado": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Lunes": [{"producto": "NANKIN 100 ME", "dosis": 0.4, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Miércoles": [{"producto": "SULFATO DE MG", "dosis": 2, "tox": "N.A.", "reentrada": "AL SECADO", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}]}, "BLOQUE 25B": {"Sábado": [{"producto": "IMPERIUS", "dosis": 0.8, "tox": "IV", "reentrada": "12 HORAS", "tipo": "ACARICIDA", "blanco": "ACAROS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Martes": [{"producto": "NANKIN 100 ME", "dosis": 0.4, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Viernes": [{"producto": "SULFATO DE MG", "dosis": 2, "tox": "N.A.", "reentrada": "AL SECADO", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}]}, "BLOQUE 26A": {"Miércoles": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Lunes": [{"producto": "AZIMUT 320 SC", "dosis": 1, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MOHO GRIS (BOTRYTIS CINÉREA)  MILDEO POLVOSO (PODOSPHAERA PANNOSA) CLADOSPORIUM ECHINULSTIUM"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Viernes": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 26B": {"Jueves": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Martes": [{"producto": "NANKIN 100 ME", "dosis": 0.4, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Sábado": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS COLOR"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 1A": {"Miércoles": [{"producto": "PRECISION MD", "dosis": 0.5, "tox": "N/A", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "POR SER FERTILIZANTE NO HAY CULTIVO ESPECIFICO"}, {"producto": "OBERON SC 240", "dosis": 0.3, "tox": "III", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "ACARO"}], "Viernes": [{"producto": "VIDENTI", "dosis": 0.65, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "PLEO 50 EC", "dosis": 0.6, "tox": "II", "reentrada": "4 HORAS", "tipo": "INSECTICIDA", "blanco": "TRIPS (FRANKINIELLA OCCIDENTALIS)"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Lunes": [{"producto": "INFINITO SC", "dosis": 1.6, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO VELLOSO"}, {"producto": "MF REDUX", "dosis": 0.5, "tox": "IV", "reentrada": "AL SECADO", "tipo": "COADYUVANTE", "blanco": "NA"}, {"producto": "RUTASTAR", "dosis": 1.5, "tox": "IV VER", "reentrada": "AL SECADO", "tipo": "BIORACIONAL", "blanco": "BOTRYTIS CINEREA, SIGATOKA NEGRA"}, {"producto": "ZIRAM 76 GRANUFLO", "dosis": 0.7, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}]}, "BLOQUE 15AA": {"Jueves": [{"producto": "IMPERIUS", "dosis": 0.8, "tox": "IV", "reentrada": "12 HORAS", "tipo": "ACARICIDA", "blanco": "ACAROS"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Sábado": [{"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "BASFOLIAR CALCIO", "dosis": 2, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS"}], "Martes": [{"producto": "ELMUS SC", "dosis": 0.4, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS Y PUCCINIA HORIANA"}, {"producto": "ELOSAL SC 720", "dosis": 0.5, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "MILDEO POLVOSO"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}]}, "BLOQUE 12 FD": {"Sábado": [{"producto": "ARACNIUM PRO SC", "dosis": 0.3, "tox": "IV", "reentrada": "4 HORAS", "tipo": "ACARICIDA", "blanco": "TETRANYCHUS URTICAE"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}], "Jueves": [{"producto": "CROPSTAR", "dosis": 1, "tox": "NA", "reentrada": "NA", "tipo": "FERTILIZANTES", "blanco": "NA"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}, {"producto": "CAPTAN 480 SC", "dosis": 1.2, "tox": "III", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS FREEDOM"}], "Martes": [{"producto": "ELMUS SC", "dosis": 0.4, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS Y PUCCINIA HORIANA"}, {"producto": "SANYSTAR 30 SC", "dosis": 0.75, "tox": "II", "reentrada": "4 HORAS", "tipo": "FUNGICIDA", "blanco": "BOTRYTIS COLOR"}, {"producto": "REDUX SL", "dosis": 0.5, "tox": "III", "reentrada": "AL SECADO", "tipo": "COADYUDANTE", "blanco": "NA"}]}}}};
 
     let appData = INITIAL_PAYLOAD;
     const currentWeek = '2640';
@@ -668,7 +805,33 @@
       return '<span class="product-tox tox-other">TOX: ' + t + '</span>';
     }
 
-    // Auto-fetch Backup_Fumigacion.sql when hosted on GitHub Pages or web server
+    // Helper: Checks if a product or application has hourly restricted re-entry
+    function tieneHorasRestringidas(reentradaStr) {
+      if (!reentradaStr) return false;
+      const s = String(reentradaStr).toUpperCase().trim();
+      if (s === 'NA' || s === 'N/A' || s === 'N.A.' || s === 'AL SECADO' || s === 'NO TIENE' || s === '0' || s === '') {
+        return false;
+      }
+      if (s.includes('HORA') || s.includes('HR') || s.includes('DIA')) {
+        return true;
+      }
+      return false;
+    }
+
+    // Checks if a block has any 6:00 AM application in current week
+    function bloqueTieneAplicacion6AM(bloqueName) {
+      const semanaData = (appData.scheduleData && appData.scheduleData[currentWeek]) || {};
+      const bloqueData = semanaData[bloqueName] || {};
+      for (let dia in bloqueData) {
+        const prods = bloqueData[dia] || [];
+        if (prods.length > 0) {
+          const tieneHoras = prods.some(p => tieneHorasRestringidas(p.reentrada));
+          if (!tieneHoras) return true;
+        }
+      }
+      return false;
+    }
+
     async function autoCargarDesdeSQL() {
       const posiblesArchivos = ['Backup_Fumigacion.sql', './Backup_Fumigacion.sql'];
       for (let ruta of posiblesArchivos) {
@@ -774,6 +937,7 @@
                 const prod = String(it.producto || 'Sin producto').trim();
                 const dosis = it.dosis;
                 const tox = String(it.tox || 'N/A').trim();
+                const reentrada = String(it.reentrada || 'NA').trim();
 
                 if (!newSchedule[normB]) newSchedule[normB] = {};
                 if (!newSchedule[normB][dia]) newSchedule[normB][dia] = [];
@@ -781,7 +945,8 @@
                 newSchedule[normB][dia].push({
                   producto: prod,
                   dosis: dosis,
-                  tox: tox
+                  tox: tox,
+                  reentrada: reentrada
                 });
               });
             }
@@ -798,6 +963,7 @@
           const prod = String(it.producto || 'Sin producto').trim();
           const dosis = it.dosis;
           const tox = String(it.tox || 'N/A').trim();
+          const reentrada = String(it.reentrada || 'NA').trim();
 
           if (!newSchedule[bName]) newSchedule[bName] = {};
           if (!newSchedule[bName][dia]) newSchedule[bName][dia] = [];
@@ -805,7 +971,8 @@
           newSchedule[bName][dia].push({
             producto: prod,
             dosis: dosis,
-            tox: tox
+            tox: tox,
+            reentrada: reentrada
           });
         });
       }
@@ -828,6 +995,15 @@
         title.textContent = bloqueName;
 
         card.appendChild(title);
+
+        // Highlight if this block has a 6:00 AM application this week
+        if (bloqueTieneAplicacion6AM(bloqueName)) {
+          const pill6am = document.createElement('div');
+          pill6am.className = 'block-card-6am-pill';
+          pill6am.innerHTML = '<span>⏰</span> APLICA 6:00 AM';
+          card.appendChild(pill6am);
+        }
+
         container.appendChild(card);
       });
     }
@@ -871,24 +1047,45 @@
         diasEncontrados.forEach(dia => {
           const productos = bloqueData[dia] || [];
           const daySec = document.createElement('div');
+
+          // Check if application has hourly restriction
+          const tieneHoras = productos.some(p => tieneHorasRestringidas(p.reentrada));
+          const esSinReentrada = !tieneHoras;
           
           const dayColorClass = getDayColorClass(dia);
-          daySec.className = 'day-section ' + dayColorClass;
+          daySec.className = 'day-section ' + dayColorClass + (esSinReentrada ? ' dia-sin-reentrada-6am' : '');
 
           const dayHeader = document.createElement('div');
           dayHeader.className = 'day-title';
-          dayHeader.innerHTML = `
-            <span>📅 ${dia}</span>
-            <span class="day-badge">${productos.length} ${productos.length === 1 ? 'PRODUCTO' : 'PRODUCTOS'}</span>
-          `;
+          
+          let headerHTML = `<span>📅 ${dia}</span>`;
+          if (esSinReentrada) {
+            headerHTML += `<span class="day-badge-6am">⏰ 6:00 AM</span>`;
+          }
+          headerHTML += `<span class="day-badge">${productos.length} ${productos.length === 1 ? 'PRODUCTO' : 'PRODUCTOS'}</span>`;
+          dayHeader.innerHTML = headerHTML;
           daySec.appendChild(dayHeader);
+
+          // EXACT REQUESTED ALERT: If application has no hourly re-entry time
+          if (esSinReentrada) {
+            const alertBox = document.createElement('div');
+            alertBox.className = 'alerta-6am-banner';
+            alertBox.innerHTML = `
+              <span class="alerta-6am-icon">⏰</span>
+              <div class="alerta-6am-text">
+                Esta aplicación se hará a las 6 de la mañana espero contar con su apoyo.
+              </div>
+            `;
+            daySec.appendChild(alertBox);
+          }
 
           const list = document.createElement('ul');
           list.className = 'products-list';
 
           productos.forEach(p => {
             const li = document.createElement('li');
-            li.className = 'product-item';
+            const itemSinReentrada = !tieneHorasRestringidas(p.reentrada);
+            li.className = 'product-item' + (itemSinReentrada ? ' item-sin-reentrada' : '');
 
             const prodName = document.createElement('div');
             prodName.className = 'product-name';
@@ -897,6 +1094,19 @@
             const badgesWrapper = document.createElement('div');
             badgesWrapper.className = 'product-badges';
 
+            // Reentrada badge
+            const rStr = String(p.reentrada || 'NA').trim();
+            const reentradaSpan = document.createElement('span');
+            if (itemSinReentrada) {
+              reentradaSpan.className = 'badge-reentrada-tag badge-reentrada-libre';
+              reentradaSpan.textContent = rStr === 'AL SECADO' ? 'AL SECADO' : 'SIN REENTRADA';
+            } else {
+              reentradaSpan.className = 'badge-reentrada-tag badge-reentrada-horas';
+              reentradaSpan.textContent = rStr;
+            }
+            badgesWrapper.appendChild(reentradaSpan);
+
+            // Tox badge
             const toxHTML = getToxBadgeHTML(p.tox);
             if (toxHTML) {
               const toxSpan = document.createElement('span');
@@ -904,6 +1114,7 @@
               badgesWrapper.appendChild(toxSpan.firstElementChild);
             }
 
+            // Dosis badge
             if (p.dosis !== null && p.dosis !== undefined && p.dosis !== '') {
               const dosisBadge = document.createElement('span');
               dosisBadge.className = 'product-dosis';
